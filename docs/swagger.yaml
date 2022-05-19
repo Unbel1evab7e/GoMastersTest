@@ -1,0 +1,198 @@
+basePath: /api/v1
+definitions:
+  DTOs.User:
+    properties:
+      Age:
+        example: 1
+        format: uint
+        type: integer
+      Email:
+        example: unbel1evableik@gmail.com
+        type: string
+      Firstname:
+        example: Igor
+        type: string
+      Lastname:
+        example: Kormich
+        type: string
+    type: object
+  entity.User:
+    properties:
+      Age:
+        example: 1
+        format: uint
+        type: integer
+      Email:
+        example: unbel1evableik@gmail.com
+        type: string
+      Firstname:
+        example: Igor
+        type: string
+      Lastname:
+        example: Kormich
+        type: string
+      created:
+        type: string
+      id:
+        type: string
+    type: object
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a MasterGo Test.
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      description: Return All Users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Get All Users
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: Return Created User
+      parameters:
+      - description: Add User
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/DTOs.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: CreateUser
+      tags:
+      - Users
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: DeleteUser
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: DeleteUser
+      tags:
+      - Users
+    get:
+      consumes:
+      - application/json
+      description: Return User By ID
+      parameters:
+      - description: User Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Get User By id
+      tags:
+      - Users
+    put:
+      consumes:
+      - application/json
+      description: UpdateUser
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update user
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/DTOs.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: UpdateUser
+      tags:
+      - Users
+swagger: "2.0"
